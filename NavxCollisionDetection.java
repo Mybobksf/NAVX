@@ -25,5 +25,11 @@ public class NavXCollisionDetection extends OpMode {
     private long system_timestamp_delta = 0;
 
     //Functions
-
+    @Override
+    public void init() {
+        navx_device = AHRS.getInstance(hardwareMap.get(NavxMicroNavigationSensor.class, "navx"), AHRS.DeviceDataType.kProcessedData);
+        last_world_linear_accel_x = 0.0;
+        last_world_linear_accel_y = 0.0;
+        setCollisionState(false);
+    }
 }
