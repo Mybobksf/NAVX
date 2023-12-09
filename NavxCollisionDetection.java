@@ -79,4 +79,22 @@ public class NavXCollisionDetection extends OpMode {
   private void setCollisionState( boolean newValue ) {
       this.collision_state = newValue;
   }
+  @Override
+  public void timestampedDataReceived(long curr_system_timestamp, long curr_sensor_timestamp, Object o) {
+        boolean collisionDetected = false;
+        sensor_timestamp_delta = curr_sensor_timestamp - last_sensor_timestamp;
+        system_timestamp_delta = curr_system_timestamp - last_system_timestamp;
+        double curr_world_linear_accel_x = navx_device.getWorldLinearAccelX();
+        double currentJerkX = curr_world_linear_accel_x - last_world_linear_accel_x;
+        last_world_linear_accel_x = curr_world_linear_accel_x;
+        double curr_world_linear_accel_y = navx_device.getWorldLinearAccelY();
+        double currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
+        last_world_linear_accel_y = curr_world_linear_accel_y;
+        if ( ( Math.abs(currentJerkX) > COLLISION_THRESHOLD_DELTA_G ) ||
+                ( Math.abs(currentJerkY) > COLLISION_THRESHOLD_DELTA_G) ) {
+            collisionDetected = true;
+        }
+        setCollisionState( collisionDetected );
+    }
+
 }
