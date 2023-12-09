@@ -40,4 +40,8 @@ public class NavXCollisionDetection extends OpMode {
     public void stop() {
         navx_device.close();
     }
+    @Override
+    public void init_loop() {
+        telemetry.addData("navX Op Init Loop", runtime.toString());
+    }
 }
