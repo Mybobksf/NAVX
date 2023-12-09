@@ -96,5 +96,12 @@ public class NavXCollisionDetection extends OpMode {
         }
         setCollisionState( collisionDetected );
     }
+    @Override
+    public void untimestampedDataReceived(long l, Object o) {
 
+    }
+
+    @Override
+    public void yawReset() {
+    }
 }
