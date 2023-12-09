@@ -72,4 +72,11 @@ public class NavXCollisionDetection extends OpMode {
                                     Long.toString(system_timestamp_delta) );
       telemetry.addData("6 Events", Double.toString(navx_device.getUpdateCount()));
   }
+  private String getCollisionString() {
+      return (this.collision_state ? COLLISION : NO_COLLISION);
+  }
+
+  private void setCollisionState( boolean newValue ) {
+      this.collision_state = newValue;
+  }
 }
