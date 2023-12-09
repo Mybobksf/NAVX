@@ -32,4 +32,12 @@ public class NavXCollisionDetection extends OpMode {
         last_world_linear_accel_y = 0.0;
         setCollisionState(false);
     }
+    @Override
+    public void start() {
+        navx_device.registerCallback(this);
+    }
+    @Override
+    public void stop() {
+        navx_device.close();
+    }
 }
