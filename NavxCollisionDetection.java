@@ -44,4 +44,32 @@ public class NavXCollisionDetection extends OpMode {
     public void init_loop() {
         telemetry.addData("navX Op Init Loop", runtime.toString());
     }
+    @Override
+    public void loop() {
+
+      boolean connected = navx_device.isConnected();
+      telemetry.addData("1 navX-Device", connected ?
+              "Connected" : "Disconnected" );
+      String gyrocal, motion;
+      DecimalFormat df = new DecimalFormat("#.##");
+
+      if (connected) {
+          gyrocal = (navx_device.isCalibrating() ?
+                  "CALIBRATING" : "Calibration Complete");
+          motion = (navx_device.isMoving() ? "Moving" : "Not Moving");
+          if (navx_device.isRotating()) {
+              motion += ", Rotating";
+          }
+      } 
+      else {
+          gyrocal =
+            motion = "-------";
+      }
+      telemetry.addData("2 GyroAccel", gyrocal );
+      telemetry.addData("3 Motion", motion);
+      telemetry.addData("4 Collision", getCollisionString());
+      telemetry.addData("5 Timing", Long.toString(sensor_timestamp_delta) + ", " +
+                                    Long.toString(system_timestamp_delta) );
+      telemetry.addData("6 Events", Double.toString(navx_device.getUpdateCount()));
+  }
 }
